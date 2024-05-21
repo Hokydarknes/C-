@@ -1,0 +1,226 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection.Emit;
+using System.Xml.Linq;
+
+namespace basaplayer
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            const string CommandAddPlayerBasa = "1";
+            const string CommandActivePlayerBasa = "2";
+            const string CommandDeactivplayerBasa = "3";
+            const string CommandPrintPlayerDataBasa = "4";
+            const string CommandExit = "5";
+            const string CommandCreatFile = "6";
+
+            string directiryPath = @"C:\\Users\\moroz\\source\\repos\\база игроков\\база игроков\\bin\\Debug";
+            string[] files = Directory.GetFiles(directiryPath,"*.txt");
+            string commandUse;
+            bool isRunning = true;
+
+            basaPlayer database = new basaPlayer();
+
+            while (isRunning)
+            {
+                Console.Clear();
+                foreach(string file in files)
+                {
+                    string fileContent = File.ReadAllText(file);
+                    Console.WriteLine($"содержание файла{file}");
+                    Console.WriteLine(fileContent);
+                }
+                    
+                Console.WriteLine("welcome ty орден ");
+                Console.WriteLine("что хотите делать в ордене");
+                Console.WriteLine($"Добавить тамплиера{CommandAddPlayerBasa}");
+                Console.WriteLine($" активировать тамплиера{CommandActivePlayerBasa}");
+                Console.WriteLine($"деактивировать тамплиера{CommandDeactivplayerBasa}");
+                Console.WriteLine($"дать снарежение тамплиера{CommandPrintPlayerDataBasa}");
+                Console.WriteLine($"выход на задание{CommandExit}");
+                Console.WriteLine($"создать фаил{CommandCreatFile}");
+                commandUse = Console.ReadLine();
+                switch (commandUse)
+                {
+                    case CommandAddPlayerBasa:
+                        database.AddComponet();
+                        break;
+                    case CommandActivePlayerBasa:
+                        database.Activad();
+                        break;
+                    case CommandDeactivplayerBasa:
+                        database.Deactiv();
+                        break;
+                    case CommandPrintPlayerDataBasa:
+                        database.Print();
+                        break;
+                    case CommandExit:
+                        isRunning = false;
+                        break;
+                    default:
+                        Console.WriteLine("ты даже не гражданин");
+                        break;
+                }
+                Console.WriteLine("нажмите на  кнопку товариш");
+
+                Console.ReadKey();
+
+            }
+
+        }
+    }
+    class Player
+    {
+        public Player(int id, string name, int level)
+        {
+            Name = name;
+            Level = level;
+            Id = id;
+            Isbanned = true;
+
+        }
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+
+        public int Level { get; private set; }
+
+        public bool Isbanned { get; private set; }
+
+
+
+        public void Unban()
+        {
+            Isbanned = true;
+        }
+        public void Ban()
+        {
+            Isbanned = false;
+        }
+
+
+    }
+    class basaPlayer
+    {
+        private List<Player> _list = new List<Player>(0);
+        private int _lastNumber = 0;
+        
+        
+
+        
+
+        public void AddComponet()
+        {
+            bool isSpecifiedLevel = false;
+            int level = 0;
+            string[] textPlayer = new string[2];
+            Console.WriteLine("назовите персонажа");
+            string name = Console.ReadLine();
+            textPlayer[0]=name;
+            Console.WriteLine("укажите левел персонажа");
+
+
+            while (isSpecifiedLevel == false)
+            {
+                if (int.TryParse(Console.ReadLine(), out level))
+                    isSpecifiedLevel = true;
+                else
+                    Console.WriteLine("вы указали не уровень");
+            }
+            textPlayer[1]=Convert.ToString(level);
+            _list.Add(new Player(_lastNumber++, name, level));
+            
+            SaveEmployees(name, textPlayer);
+        }
+        public void Activad()
+        {
+            int index;
+            Print();
+            string commandUsee = Console.ReadLine();
+
+            if (TryGetPlayer(commandUsee, out index))
+            {
+                if (_list[index].Isbanned == false)
+                    _list[index].Unban();
+                else
+                    Console.WriteLine("аккауут активен");
+
+
+            }
+
+
+        }
+
+        public void Deactiv()
+        {
+
+            int index;
+            string commandUsee = Console.ReadLine();
+            Console.WriteLine("какова пользователя хотите деактивировать");
+            Print();
+            commandUsee = Console.ReadLine();
+
+
+            if (TryGetPlayer(commandUsee, out index))
+                _list[index].Ban();
+        }
+
+        public void Print()
+        {
+            for (int i = 0; i < _list.Count; i++)
+            {
+                const string StatycAkt = "активен";
+                const string Statycdekt = "деактивен";
+                string statusTampl;
+
+                for (i = 0; i < _list.Count; i++)
+                {
+                    if (_list[i].Isbanned)
+                        statusTampl = StatycAkt;
+                    else
+                        statusTampl = Statycdekt;
+
+                    Console.WriteLine($"такой тамплиер c id -- {_list[i].Id+1})\n с таким именим --  {_list[i].Name}\n  его лвл: {_list[i].Level}\n  статус: {statusTampl}\n ");
+                }
+
+            }
+        }
+        private bool TryGetPlayer(string IdPlayer, out int id)
+        {
+            bool isProverka = false;
+            if (int.TryParse(IdPlayer, out id))
+            {
+                for (int i = 0; i < _list.Count; i++)
+                {
+                    if (_list[i].Id == id-1)
+                    {
+                        isProverka = true;
+                        id = i;
+                        break;
+                    }
+
+
+
+                }
+            }
+            return isProverka;
+        }
+
+        public void SaveEmployees(string loginUser, string[] textFil)
+        {
+          
+            File.WriteAllLines($"{loginUser}.txt", textFil);
+
+            
+        }
+
+        
+        
+
+
+    }
+
+}
+
