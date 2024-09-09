@@ -1,0 +1,102 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Создание экземпляра StudentManager
+        StudentManager manager = new StudentManager();
+
+        // Добавление студентов
+        manager.AddStudent(new Student(1, "Иван Иванов", 20, "Программирование", 4.5));
+        manager.AddStudent(new Student(2, "Петр Петров", 22, "Математика", 3.8));
+
+        // Вывод всех студентов
+        Console.WriteLine("Все студенты:");
+        manager.DisplayAllStudents();
+
+        // Поиск студента по ID
+        Console.WriteLine("\nПоиск студента с ID 1:");
+        Student student = manager.GetStudentById(1);
+        if (student != null)
+        {
+            Console.WriteLine(student);
+        }
+        else
+        {
+            Console.WriteLine("Студент не найден.");
+        }
+
+        // Удаление студента по ID
+        manager.RemoveStudent(1);
+        Console.WriteLine("\nПосле удаления студента с ID 1:");
+        manager.DisplayAllStudents();
+    }
+}
+
+
+public class StudentManager
+{
+    private List<Student> students;
+
+    public StudentManager()
+    {
+        students = new List<Student>();
+    }
+
+    // Метод для добавления студента в базу данных
+    public void AddStudent(Student student)
+    {
+        students.Add(student);
+    }
+
+    // Метод для удаления студента по ID
+    public void RemoveStudent(int id)
+    {
+        var studentToRemove = students.Find(s => s.Id == id);
+        if (studentToRemove != null)
+        {
+            students.Remove(studentToRemove);
+        }
+    }
+
+    // Метод для получения информации о студенте по ID
+    public Student GetStudentById(int id)
+    {
+        return students.Find(s => s.Id == id);
+    }
+
+    // Метод для вывода всех студентов
+    public void DisplayAllStudents()
+    {
+        foreach (var student in students)
+        {
+            Console.WriteLine(student);
+        }
+    }
+}
+
+public class Student
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public string Major { get; set; }
+    public double GPA { get; set; }
+
+    // Конструктор для инициализации студента
+    public Student(int id, string name, int age, string major, double gpa)
+    {
+        Id = id;
+        Name = name;
+        Age = age;
+        Major = major;
+        GPA = gpa;
+    }
+
+    // Переопределение метода ToString для удобного вывода информации о студенте
+    public override string ToString()
+    {
+        return $"ID: {Id}, Name: {Name}, Age: {Age}, Major: {Major}, GPA: {GPA:F2}";
+    }
+}
