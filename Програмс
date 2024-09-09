@@ -1,0 +1,68 @@
+如发现站点功能异常,请加群反馈704081431,反馈问题请携带错误截图辅助排查
+
+站点域名可能被污染导致无法访问，请保存地址发布页面防止丢失EasyGPT地址发布页面，出现使用问题也请优先尝试发布页其他站点。
+站点gpt-3.5-turbo,gpt-4o-free无需登录可直接使用
+登录用户可免费使用目前最强语言模型gpt-4-all(输入框最后一个按钮切换模型,目前限制8/1d,如需解除使用限制,请前往爱发电捐赠,备注邮箱将自动绑定至网站账号,忘记备注请复制订单号至此网站设置页面兑换;)(请珍惜接口不要滥用,不要尝试违禁内容)
+网站已运行超过十五个月，没有进行过任何引流或广告变现。如果网站对您有帮助且您有能力，请捐赠任意金额后使用。微信捐赠 支付宝红包 支付宝捐赠
+Написать программу на c#
+
+当前CAPTCHA达到使用限制,请重新验证后重试.
+
+Написать програму на c# Нужно будет создать базу КС 22-1нужно реализовать класс студент от 3 до 5 параметров, класс управления, класс programs
+
+Для создания простой программы на C#, которая включает в себя базу данных студентов с классами Student, ProgramManager, и Program, вы можете использовать следующий пример кода. В этом примере будет создана структура для хранения студентов, управления программами и основной логики.
+
+1. Класс Student
+public class Student
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public string Major { get; set; }
+    public double GPA { get; set; }
+
+    public Student(int id, string name, int age, string major, double gpa)
+    {
+        Id = id;
+        Name = name;
+        Age = age;
+        Major = major;
+        GPA = gpa;
+    }
+
+    public override string ToString()
+    {
+        return $"{Id}: {Name}, Age: {Age}, Major: {Major}, GPA: {GPA}";
+    }
+}
+2. Класс ProgramManager
+using System.Collections.Generic;
+
+public class ProgramManager
+{
+    private List<Student> students;
+
+    public ProgramManager()
+    {
+        students = new List<Student>();
+    }
+
+    public void AddStudent(Student student)
+    {
+        students.Add(student);
+    }
+
+    public void RemoveStudent(int studentId)
+    {
+        students.RemoveAll(s => s.Id == studentId);
+    }
+
+    public Student GetStudentById(int studentId)
+    {
+        return students.Find(s => s.Id == studentId);
+    }
+
+    public List<Student> GetAllStudents()
+    {
+        return students;
+    }
