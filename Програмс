@@ -1,16 +1,46 @@
-如发现站点功能异常,请加群反馈704081431,反馈问题请携带错误截图辅助排查
+using System;
 
-站点域名可能被污染导致无法访问，请保存地址发布页面防止丢失EasyGPT地址发布页面，出现使用问题也请优先尝试发布页其他站点。
-站点gpt-3.5-turbo,gpt-4o-free无需登录可直接使用
-登录用户可免费使用目前最强语言模型gpt-4-all(输入框最后一个按钮切换模型,目前限制8/1d,如需解除使用限制,请前往爱发电捐赠,备注邮箱将自动绑定至网站账号,忘记备注请复制订单号至此网站设置页面兑换;)(请珍惜接口不要滥用,不要尝试违禁内容)
-网站已运行超过十五个月，没有进行过任何引流或广告变现。如果网站对您有帮助且您有能力，请捐赠任意金额后使用。微信捐赠 支付宝红包 支付宝捐赠
-Написать программу на c#
+class Program
+{
+    static void Main(string[] args)
+    {
+        ProgramManager manager = new ProgramManager();
 
-当前CAPTCHA达到使用限制,请重新验证后重试.
+        // Adding some students
+        manager.AddStudent(new Student(1, "Alice", 20, "Computer Science", 3.5));
+        manager.AddStudent(new Student(2, "Bob", 22, "Mathematics", 3.8));
 
-Написать програму на c# Нужно будет создать базу КС 22-1нужно реализовать класс студент от 3 до 5 параметров, класс управления, класс programs
+        // Display all students
+        Console.WriteLine("All students:");
+        foreach (var student in manager.GetAllStudents())
+        {
+            Console.WriteLine(student);
+        }
 
-Для создания простой программы на C#, которая включает в себя базу данных студентов с классами Student, ProgramManager, и Program, вы можете использовать следующий пример кода. В этом примере будет создана структура для хранения студентов, управления программами и основной логики.
+        // Find a student by ID
+        int idToFind = 1;
+        var foundStudent = manager.GetStudentById(idToFind);
+        if (foundStudent != null)
+        {
+            Console.WriteLine($"\nFound student with ID {idToFind}:");
+            Console.WriteLine(foundStudent);
+        }
+        else
+        {
+            Console.WriteLine($"\nStudent with ID {idToFind} not found.");
+        }
+
+        // Remove a student
+        manager.RemoveStudent(1);
+
+        // Display all students after removal
+        Console.WriteLine("\nAll students after removal:");
+        foreach (var student in manager.GetAllStudents())
+        {
+            Console.WriteLine(student);
+        }
+    }
+}
 
 1. Класс Student
 public class Student
