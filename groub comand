@@ -1,29 +1,13 @@
  internal static class Comand
  {
-     public const string TitleFileBasa = "basa.txt";
+    
+     public const string nameBase = "base.txt";
+     public const string InfoStudent = "cстудент";
+     public const int InfoName = 0;
+     public const int InfoFamilyname = 1;
+     public const int InfoAge = 2;
+     public const int InfoId = 3;
 
-     public static void RemoveLineFile(string pave)
-     {
-         string[] namesFile = File.ReadAllLines(TitleFileBasa);
-
-         namesFile = GetArray(pave, namesFile);
-
-         File.Delete(TitleFileBasa);
-         File.AppendAllLines(TitleFileBasa,namesFile);
-     }
-     private static string[] GetArray(string pave, string[] paves)
-     {
-         List<string> list = new List<string>();
-
-         foreach (string p in paves)
-             if(p!= pave)
-                 list.Add(p);
-
-         string[] strings = new string[paves.Length];
-
-         for(int i = 0; i < strings.Length; i++)
-             strings[i] = list[i];
-
-         return strings;
-     }
+     
+    
  }
