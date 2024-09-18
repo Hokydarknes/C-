@@ -1,4 +1,4 @@
-    internal class Program
+ internal class Program
  {
      static void Main(string[] args)
      {
@@ -18,11 +18,11 @@
          Name = name;
          Familyname = familyname;
          Age = age;
-         NameFile = $"{Familyname}_{Name}.txt";
          _nemesFilse[0] = NameFile; 
 
-         if(IsCreateFile(NameFile))
-             CreateFile();
+         
+             CreateLine();
+       
      }
 
      public int Id { get; private set; }
@@ -34,20 +34,17 @@
      public int Age { get; private set; }
      public string NameFile {  get; private set; }
 
-     private bool IsCreateFile(string titleFile)
-     {
-         return File.Exists(titleFile);
-     }
+   
 
-     private void CreateFile()
+     private void CreateLine()
      {
-         string[] textFile = new string[3];
-         textFile[0] = Name;
-         textFile[1] = Familyname;
-         textFile[2] = Convert.ToString(Age);
+         string nameBase = Comand.nameBase;
+         string[] textFile = new string[1];
+         textFile[0] =$" {Familyname} {Age} {Name}";
+         
 
-         File.AppendAllLines(NameFile, textFile);
-         File.AppendAllLines(Comand.TitleFileBasa, _nemesFilse);
+         
+         File.AppendAllLines(nameBase, textFile);
      }
 
  }
@@ -137,7 +134,7 @@
          Console.WriteLine(":");
          id = InputNumber()-1;
          File.Delete(_students[id].NameFile);
-         Comand.RemoveLineFile(_students[id].NameFile);
+         //Comand.RemoveLineFile(_students[id].NameFile);
 
          _students.RemoveAt(id);
      }
@@ -154,25 +151,22 @@
      }
      private void RestoreDatabasa()
      {
-         const int InfosId = 0;
-         const int InfoName = 1;
-         const int InfoFamilyname = 2;
-         const int InfoAge = 3;
+         
          string[] infoStudent;
-
-         if (File.Exists(Comand.TitleFileBasa))
+        
+         if (File.Exists(Comand.nameBase))
          {
-             _titleFile = File.ReadAllLines(Comand.TitleFileBasa);
+             _titleFile = File.ReadAllLines(Comand.nameBase);
 
              for(int i = 0; i < _titleFile.Length; i++)
              {
                  if (File.Exists(_titleFile[i]))
                  {
                      infoStudent = File.ReadAllLines(_titleFile[i]);
-                     _students.Add(new Student(Convert.ToInt32(infoStudent[InfosId]), 
-                                                               infoStudent[InfoName], 
-                                                               infoStudent[InfoFamilyname], 
-                                                               Convert.ToInt32(infoStudent[InfoAge])));
+                     _students.Add(new Student(Convert.ToInt32(infoStudent[Comand.InfoId]), 
+                                                               infoStudent[Comand.InfoName], 
+                                                               infoStudent[Comand.InfoFamilyname], 
+                                                               Convert.ToInt32(infoStudent[Comand.InfoAge])));
                  }
              }
          }
